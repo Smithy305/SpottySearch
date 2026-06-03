@@ -46,8 +46,8 @@ Qwen2.5-VL needs a recent version of Transformers, so update it if the model fai
 The pipeline is driven from three Jupyter notebooks, each covering a distinct stage, plus a small annotation tool:
 
 - **`label_images.py`** — a Tkinter GUI for annotating photos with written descriptions, used to build the evaluation set.
-- **`experiments.ipynb`** — builds the CLIP image index and runs image-similarity search.
-- **`caption_generating_experiments.ipynb`** — generates a caption per photo with Qwen2.5-VL (cached to `captions.json`), builds the caption index, and runs caption-based search.
+- **`clip_search.ipynb`** — builds the CLIP image index and runs image-similarity search.
+- **`ccaption_search.ipynb`** — generates a caption per photo with Qwen2.5-VL (cached to `captions.json`), builds the caption index, and runs caption-based search.
 - **`evaluate.ipynb`** — compares both routes on the labelled queries and reports recall and MRR.
 ## Data
  
