@@ -16,7 +16,7 @@ Two complementary retrieval routes run over the same set of photos.
  
 **Caption search (VLM + text embeddings).** Every photo is described by a vision-language model (Qwen2.5-VL-3B-Instruct), which lists each item and its colour, form and any patterns. Those captions are embedded with a sentence model (all-MiniLM-L6-v2) and searched the same way. This route is strongest on specific painted text and named designs.
  
-The two routes are independent and can be compared, or their scores fused. CLIP is a contrastive, discriminative model; the captioning step is generative, which is what produces the searchable descriptions.
+The two routes are independent and evaluated separately. CLIP is a contrastive, discriminative model; the captioning step is generative, which is what produces the searchable descriptions.
  
 ## Features
  
@@ -26,7 +26,7 @@ The two routes are independent and can be compared, or their scores fused. CLIP 
 - Caption generation is cached and resumable, so an interrupted run picks up where it left off.
 ## Tech stack
  
-Python, PyTorch, OpenAI CLIP, Qwen2.5-VL via Hugging Face Transformers and qwen-vl-utils, sentence-transformers, NumPy, Pillow, matplotlib.
+Python, PyTorch, OpenAI CLIP, Qwen2.5-VL via Hugging Face Transformers and qwen-vl-utils, sentence-transformers, NumPy, Pillow, matplotlib, Tkinter (annotation tool).
  
 ## Setup
  
@@ -43,16 +43,15 @@ Qwen2.5-VL needs a recent version of Transformers, so update it if the model fai
  
 ## Usage
  
-The pipeline is currently driven from a Jupyter notebook, in these stages:
- 
-1. Point the code at a folder of photos.
-2. Build the CLIP image index (embed every photo once and cache it).
-3. Generate a description per photo with Qwen2.5-VL (cached to `captions.json`).
-4. Build the caption index (embed every caption with the sentence model).
-5. Search by text and view the top matches with their descriptions.
+The pipeline is driven from three Jupyter notebooks, each covering a distinct stage, plus a small annotation tool:
+
+- **`label_images.py`** — a Tkinter GUI for annotating photos with written descriptions, used to build the evaluation set.
+- **`experiments.ipynb`** — builds the CLIP image index and runs image-similarity search.
+- **`caption_generating_experiments.ipynb`** — generates a caption per photo with Qwen2.5-VL (cached to `captions.json`), builds the caption index, and runs caption-based search.
+- **`evaluate.ipynb`** — compares both routes on the labelled queries and reports recall and MRR.
 ## Data
  
-The sample photos are not committed. The real café images contain customers' names and personalised designs, so they are kept private. Point the code at your own image folder to try it.
+43 sample photos are included in the `Data/` folder.
  
 ## Evaluation
  
